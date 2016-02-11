@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +17,12 @@ public class App {
 	private JLabel lblOperacio = new JLabel("Operacio");
 	
 	private JFrame frame;
+	
+	private static int NUM_MAX = 100;
+	
+	private int valor1 = 0;
+	
+	private int valor2 = 0;
 
 	/**
 	 * Launch the application.
@@ -44,6 +51,8 @@ public class App {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		Random rnd = new Random();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 400);
@@ -135,5 +144,7 @@ public class App {
 				});
 			}
 		});
+		
+		
 	}
 }
