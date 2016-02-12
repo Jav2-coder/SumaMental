@@ -1,5 +1,6 @@
 package net.javierjimenez;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,6 +20,8 @@ import javax.swing.Timer;
 public class App {
 
 	private JLabel lblOperacio = new JLabel("", SwingConstants.CENTER);
+	
+	private JLabel lblError = new JLabel("", SwingConstants.CENTER);
 
 	private JLabel lblSegons = new JLabel("0", SwingConstants.CENTER);
 
@@ -121,7 +124,8 @@ public class App {
 
 		frame.getContentPane().add(lblTitol, g);
 
-		JLabel lblError = new JLabel("");
+		lblError.setFont(new Font("Serif", Font.BOLD, 15));
+		lblError.setForeground(Color.red);
 		g.fill = GridBagConstraints.BOTH;
 
 		g.weightx = 0.5;
@@ -176,10 +180,9 @@ public class App {
 					System.exit(0);
 
 				} else {
-
-					canviOperacio(rnd);
-
-					cont++;
+						
+					resultatOperacio(resposta.getText());
+					
 				}
 			}
 
@@ -198,17 +201,35 @@ public class App {
 		frame.getContentPane().add(lblSegons, g);
 	}
 
-	private void canviOperacio(Random rnd) {
+	private void resultatOperacio(String r) {
 
-		valor1 = rnd.nextInt(NUM_MAX + 1);
-		valor2 = rnd.nextInt(NUM_MAX) + 1;
+		switch(signe){
+		case "+":
+			resultat = valor1 + valor2;
+			break;
+		case "-":
+			resultat = valor1 - valor2;
+			break;
+		case "*":
+			resultat = valor1 * valor2;
+			break;
+		}
+		
+		if(r.equals(String.valueOf(resultat))){
+			cont++;
+			
+			valor1 = rnd.nextInt(NUM_MAX + 1);
+			valor2 = rnd.nextInt(NUM_MAX) + 1;
 
-		signe = operacions[rnd.nextInt(operacions.length)];
+			signe = operacions[rnd.nextInt(operacions.length)];
 
-		String val1 = String.valueOf(valor1);
-		String val2 = String.valueOf(valor2);
+			String val1 = String.valueOf(valor1);
+			String val2 = String.valueOf(valor2);
 
-		lblOperacio.setText(val1 + signe + val2);
+			lblOperacio.setText(val1 + signe + val2);
+			lblError.setText("");
+		} else {
+			lblError.setText("Error: Resposta incorrecta!");
+		}
 	}
-
 }
