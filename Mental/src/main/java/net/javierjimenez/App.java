@@ -20,7 +20,7 @@ import javax.swing.Timer;
 public class App {
 
 	private JLabel lblOperacio = new JLabel("", SwingConstants.CENTER);
-	
+
 	private JLabel lblError = new JLabel("", SwingConstants.CENTER);
 
 	private JLabel lblSegons = new JLabel("0", SwingConstants.CENTER);
@@ -180,9 +180,9 @@ public class App {
 					System.exit(0);
 
 				} else {
-						
+
 					resultatOperacio(resposta.getText());
-					
+
 				}
 			}
 
@@ -199,11 +199,12 @@ public class App {
 		g.gridx = 0;
 		g.gridy = 5;
 		frame.getContentPane().add(lblSegons, g);
+
 	}
 
 	private void resultatOperacio(String r) {
 
-		switch(signe){
+		switch (signe) {
 		case "+":
 			resultat = valor1 + valor2;
 			break;
@@ -214,10 +215,10 @@ public class App {
 			resultat = valor1 * valor2;
 			break;
 		}
-		
-		if(r.equals(String.valueOf(resultat))){
+
+		if (r.equals(String.valueOf(resultat))) {
 			cont++;
-			
+
 			valor1 = rnd.nextInt(NUM_MAX + 1);
 			valor2 = rnd.nextInt(NUM_MAX) + 1;
 
