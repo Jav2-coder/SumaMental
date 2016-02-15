@@ -17,32 +17,76 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author alumne1daw
+ *
+ */
 public class App {
 
+	/**
+	 * Objeto JLabel que contendra la operacion a resolver
+	 */
 	private JLabel lblOperacio = new JLabel("", SwingConstants.CENTER);
 
-	private JLabel lblError = new JLabel("", SwingConstants.CENTER);
-
-	private JLabel lblSegons = new JLabel("0", SwingConstants.CENTER);
-
-	private JFrame frame;
-
-	private String[] operacions = { "+", "-", "*" };
-
-	private int NUM_MAX = 10;
-
-	private int valor1, valor2, resultat;
-
-	private int seg = 0;
-
-	private int cont = 0;
-
-	Random rnd = new Random();
-
-	String signe;
+	/**
+	 * Objeto JLabel que contendra un mensaje de error en el caso de resolver
+	 * mal la operacion.
+	 */
+	private JLabel lblError = new JLabel(" ", SwingConstants.CENTER);
 
 	/**
-	 * Launch the application.
+	 * Objeto JLabel que contiene los segundos del Timer.
+	 */
+	private JLabel lblSegons = new JLabel("0", SwingConstants.CENTER);
+
+	/**
+	 * Objeto JFrame principal del programa
+	 */
+	private JFrame frame;
+
+	/**
+	 * Array de objetos String que contiene los signos matematicos
+	 */
+	private String[] operacions = { "+", "-", "*" };
+
+	/**
+	 * Variables Integer que contiene el numero maximo a usar en las
+	 * operaciones.
+	 */
+	private int NUM_MAX = 10;
+
+	/**
+	 * Variables Integer que contienen los valores y el resultado de la
+	 * operacion.
+	 */
+	private int valor1, valor2, resultat;
+
+	/**
+	 * Variable Integer que contiene los segundos totales hasta resolver 3
+	 * operaciones.
+	 */
+	private int seg = 0;
+
+	/**
+	 * Variable Integer que usamos para contar el total de operaciones
+	 * resueltas.
+	 */
+	private int cont = 0;
+
+	/**
+	 * Objeto Random que usaremos para obtener numeros aleatorios.
+	 */
+	private Random rnd = new Random();
+
+	/**
+	 * Variable String que contiene el simbolo matematico de la operacion
+	 * actual.
+	 */
+	private String signe;
+
+	/**
+	 * Constructor principal que inicializa el mismo.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -58,14 +102,14 @@ public class App {
 	}
 
 	/**
-	 * Create the application.
+	 * Constructor que crea la aplicacion.
 	 */
 	public App() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Metodo que inicializa el contenido del frame.
 	 */
 	private void initialize() {
 
@@ -170,20 +214,38 @@ public class App {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (cont == 2) {
+				/*
+				 * Comprovamos que la respuesta dada es correcta o no y
+				 * comprobamos si hemos resuelto o no 3 operaciones
+				 * correctamente
+				 */
+				if (resultatOperacio(resposta.getText())) {
 
-					time.stop();
+					if (cont == 3) {
 
-					JOptionPane.showMessageDialog(frame, "Has trigat " + String.valueOf(seg) + " segons.",
-							"Felicitats!", JOptionPane.PLAIN_MESSAGE);
+						time.stop();
 
-					System.exit(0);
+						JOptionPane.showMessageDialog(frame, "Has trigat " + String.valueOf(seg) + " segons.",
+								"Felicitats!", JOptionPane.PLAIN_MESSAGE);
 
-				} else {
+						System.exit(0);
 
-					resultatOperacio(resposta.getText());
+					}
+
+					valor1 = rnd.nextInt(NUM_MAX + 1);
+					valor2 = rnd.nextInt(NUM_MAX) + 1;
+
+					signe = operacions[rnd.nextInt(operacions.length)];
+
+					String val1 = String.valueOf(valor1);
+					String val2 = String.valueOf(valor2);
+
+					lblOperacio.setText(val1 + signe + val2);
+					lblError.setText(" ");
 
 				}
+
+				resposta.setText("");
 			}
 
 		});
@@ -202,7 +264,14 @@ public class App {
 
 	}
 
-	private void resultatOperacio(String r) {
+	/**
+	 * Metode encargado para realizar la operacion y comprovar que el resultado
+	 * pasado es correcto o no
+	 * 
+	 * @param r Variable String que contiene el resultado escrito en el JTextField
+	 * @return Variable boolean
+	 */
+	private boolean resultatOperacio(String r) {
 
 		switch (signe) {
 		case "+":
@@ -217,20 +286,16 @@ public class App {
 		}
 
 		if (r.equals(String.valueOf(resultat))) {
+
 			cont++;
 
-			valor1 = rnd.nextInt(NUM_MAX + 1);
-			valor2 = rnd.nextInt(NUM_MAX) + 1;
+			return true;
 
-			signe = operacions[rnd.nextInt(operacions.length)];
-
-			String val1 = String.valueOf(valor1);
-			String val2 = String.valueOf(valor2);
-
-			lblOperacio.setText(val1 + signe + val2);
-			lblError.setText("");
 		} else {
+
 			lblError.setText("Error: Resposta incorrecta!");
+
+			return false;
 		}
 	}
 }
